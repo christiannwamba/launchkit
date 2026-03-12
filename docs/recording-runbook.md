@@ -22,7 +22,7 @@ ChatGPT Plus — $20/month. Everything else (Convex, WorkOS, Vercel, GitHub) is 
 
 Prepare three whiteboard frames before recording. Physical whiteboard, iPad, or a simple drawing app.
 
-**Frame 1 — The First Principle (Scene 2)**
+**Frame 1 — The First Principle (Scene 3)**
 
 ```
 ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐
@@ -36,20 +36,28 @@ Warehouse    Security Gate   Sorting Center   Delivery Truck   Doorstep
 
 Five boxes in a horizontal flow. Below each box, the package delivery analogy. Draw lines connecting each box to its analogy. The viewer should see the 1:1 mapping.
 
-**Frame 2 — Tension (Scene 3)**
+**Frame 2 — Tension: Two Bad Options (Scene 2)**
 
 ```
-Left side:                          Right side:
+Left column:                         Right column:
 
-  React? Vue? Svelte?                 ┌──────────┐
-  Firebase? Supabase? Prisma?         │ ONE PATH │
-  Auth0? Clerk? NextAuth?      ──▶    │ ONE STACK│
-  AWS? Vercel? Netlify?               │ ONE DEMO │
-  Stripe? Tailwind? MUI?             └──────────┘
-       ???
+┌────────────────────┐               ┌────────────────────┐
+│  PAY FOR AI TOOLS  │               │  BUILD IT YOURSELF │
+│                    │               │                    │
+│  Lovable           │               │  React? Vue?       │
+│  Bolt              │               │  Firebase? Supabase?│
+│  v0                │               │  Auth0? Clerk?     │
+│  Replit            │               │  AWS? Vercel?      │
+│                    │               │  Stripe? Tailwind? │
+│  $$$, locked in,   │               │                    │
+│  hire a pro to     │               │  Powerful but      │
+│  eject later       │               │  overwhelming —    │
+│                    │               │  hundreds of       │
+└────────────────────┘               │  options           │
+                                     └────────────────────┘
 ```
 
-Left side is a chaotic cluster of tool names and question marks. Right side is a single clean box. An arrow bridges them.
+Two columns. Left: expensive AI builders that lock you in. Right: free developer tools that overwhelm beginners. Neither works for someone starting out.
 
 **Frame 3 — The Stack (Scene 4)**
 
@@ -67,8 +75,8 @@ Same five boxes from Frame 1, now with tool names inside. This is the "aha" fram
 
 Before recording, create your theme so you can paste the command on camera without waiting.
 
-1. Open `https://ui.shadcn.com/themes`
-2. Pick a color palette (whatever fits the feedback board brand)
+1. Open `https://ui.shadcn.com/create`
+2. Pick a color palette (whatever fits the project brand)
 3. Copy the generated CSS variables or CLI command
 4. Note which color you chose — you'll mention it on camera
 
@@ -104,7 +112,25 @@ Before recording, create your theme so you can paste the command on camera witho
 
 ---
 
-### Scene 2 — The First Principle
+### Scene 2 — Tension: Why Beginners Get Stuck
+
+**Type:** Talking head + whiteboard (Frame 2)
+
+**Goal:** Create the problem the stack solves. Show there are two bad options, and beginners need a third way.
+
+**On screen:** You at the whiteboard. Draw the two columns one at a time.
+
+**What to say (key beats):**
+1. "If you want to build an app today, you basically have two options — and both suck for beginners."
+2. Gesture at the left column: "Option one: pay for an AI app builder — Lovable, Bolt, v0, Replit. They're fast, but they're expensive. You're locked into their platform. And when you outgrow it, you have to hire a professional to start over from scratch."
+3. Gesture at the right column: "Option two: build it yourself with free developer tools. React or Vue? Firebase or Supabase? Auth0 or Clerk? AWS or Vercel? There are hundreds of choices and no clear path. It's powerful but overwhelming."
+4. "What beginners actually need is a near-free, packaged solution — one path, one stack, one set of tools that removes decisions." Gesture at the space between the two columns.
+
+**Success state:** Viewer feels the pain of both options and wants a third way.
+
+---
+
+### Scene 3 — The First Principle
 
 **Type:** Talking head + whiteboard (Frame 1)
 
@@ -119,24 +145,6 @@ Before recording, create your theme so you can paste the command on camera witho
 4. "Software is no different."
 
 **Success state:** The five-box framework is on screen and the analogy has landed.
-
----
-
-### Scene 3 — Tension: Why Beginners Fail
-
-**Type:** Talking head + whiteboard (Frame 2)
-
-**Goal:** Create the problem the stack solves.
-
-**On screen:** You at the whiteboard. Show the chaos on the left, then reveal the clean path on the right.
-
-**What to say (key beats):**
-1. "Most first-time builders don't fail because coding is too hard."
-2. "They fail because there are too many decisions." Gesture at the chaos side.
-3. "Too many tools, too many tutorials, unclear auth, unclear backend, expensive AI app builders that hide the real system."
-4. "What beginners actually need is one path that removes decisions." Gesture at the clean side.
-
-**Success state:** Viewer feels the pain of decision overload and wants the solution.
 
 ---
 
@@ -191,10 +199,10 @@ Say: "First, let's create a folder for our project and install a setup skill I'v
 Paste this prompt into the agent:
 
 ```
-Create a folder called "feedback-board" and go into it. Then run these commands to install two skills I want to use:
+Run these commands to install two skills I want to use:
 
-npx skills add christiannwamba/launchkit --skill setup-feedback-board -y
-npx skills add christiannwamba/launchkit --skill plan-product -y
+npx skills add christiannwamba/launchkit --skill setup-project -a codex -a claude-code -y
+npx skills add christiannwamba/launchkit --skill plan-product -a codex -a claude-code -y
 
 The first one sets up the entire project. The second one helps us plan what to build. Let me know when they're done.
 ```
@@ -206,7 +214,7 @@ After the skill is installed, **start a new chat** so the agent picks up the new
 ```
 I want to build a customer feedback board — a website where people can see feedback others have submitted, sign in to submit their own feedback, and vote on ideas they like.
 
-Run the setup-feedback-board skill to set up the project for me. It will check what tools I need, install anything that's missing, create the project, push it to GitHub, install the coding skills, and set up the theme.
+Run the setup-project skill to set up the project for me. It will check what tools I need, install anything that's missing, create the project, push it to GitHub, install the coding skills, and set up the theme.
 
 When it asks me to sign in to anything, I'll do that. When it asks me to pick a theme color, I'll go to the link and choose one.
 ```
@@ -222,32 +230,27 @@ The agent follows the skill steps automatically. The user only intervenes when s
    - Show B-roll of the GitHub signup docs page (`https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github`) briefly: "If you don't have a GitHub account, go to github.com — it's free."
 
 3. **Project creation** — runs `npm create convex@latest . -- -t nextjs-authkit` in the current directory (non-interactive, no menus).
-   - **Convex sign-in moment:** The browser opens for GitHub sign-in. Say: "It's asking me to sign in with GitHub — this creates my free Convex account automatically. And it also sets up WorkOS for sign-in. One sign-in, two services."
 
-4. **Push to GitHub** — the agent runs `gh repo create feedback-board --public --source=. --push`. Say: "Our code is already on GitHub. Every change from here gets saved there."
+4. **Agent skills install** — installs seven skills **locally** into the project (not global — they stay in the project's skill directories): frontend-design, web-design-guidelines, vercel-react-best-practices, convex, convex-helpers-guide, workos, and shadcn.
 
-5. **Agent skills install** — installs seven skills **locally** into the project (not global — they stay in `.claude/skills/`): frontend-design, web-design-guidelines, vercel-react-best-practices, convex, convex-helpers-guide, workos, and shadcn.
-
-6. **Theme pause** — the agent stops and asks you to pick a theme.
-   - Open `https://ui.shadcn.com/themes` on screen
+5. **Theme pause** — the agent stops and asks you to pick a theme.
+   - Open `https://ui.shadcn.com/create` on screen
    - Say: "Before we start building features, let's make this look like ours. I'm going to pick [your color]."
    - Give the agent the CLI command or CSS variables — it applies the theme for you.
 
-7. **Component install** — installs shadcn button, card, input, textarea, badge, dialog (non-interactive).
+6. **Component install** — installs shadcn button, card, input, textarea, badge, dialog (non-interactive).
 
-8. **agent.md created** — the agent writes `agent.md` at the project root. This tells any AI agent working on the project how to run it, how to validate changes, and what skills are available. Say: "This file is like a cheat sheet for the AI — it tells it how the project works so it doesn't have to guess."
+7. **agent.md created** — the agent writes `agent.md` at the project root. This tells any AI agent working on the project how to run it, how to validate changes, and what skills are available. Say: "This file is like a cheat sheet for the AI — it tells it how the project works so it doesn't have to guess."
 
-9. **Validation** — runs `npx convex dev --once` to confirm everything compiles.
+8. **Push to GitHub** — the agent runs `gh repo create <project-name> --private --source=. --push`. Say: "Our code is already on GitHub. Every change from here gets saved there."
 
-10. **Dev server starts** — `npm run dev` launches. `localhost:3000` loads with your theme.
-
-11. **Handoff** — the agent mentions `npx vercel login` for later (deployment scene). No need to run it now.
+9. **Hand off** — the agent tells you to start the dev server. Say: "Now we start the project." Run `npm run dev` in the terminal (or click the play button in the Codex GUI). When Convex opens the browser for sign-in, say: "It's asking me to sign in with GitHub — this creates my free Convex account and sets up the sign-in system. One sign-in, two services."
 
 **Verification:**
 - Browser shows the themed Next.js page at `localhost:3000`
 - Terminal shows no errors
 - Convex dashboard at `dashboard.convex.dev` shows the project
-- GitHub repo exists at `github.com/YOUR_USERNAME/feedback-board`
+- GitHub repo exists at `github.com/YOUR_USERNAME/<project-name>`
 - `agent.md` exists at the project root
 - Theme colors are visible on the page
 
@@ -281,7 +284,7 @@ I'm building a customer feedback board. Here's what the finished product should 
 2. Anyone can click on a feedback item to see the full details
 3. If you sign in, you can submit new feedback with a title and description
 4. If you sign in, you can vote on feedback you like — but only once per item (clicking again removes your vote)
-5. Sign in and sign out are already set up through WorkOS AuthKit
+5. The sign-in system is already set up
 
 Use the plan-product skill to create a build plan in docs/feedback-board-plan.md. Each step should build one piece of the product that I can immediately see and check — in my browser or in the Convex dashboard. No steps where I just have to trust that something worked.
 ```
@@ -349,7 +352,7 @@ The plan will likely include steps for:
 
 For each of these, use the talking points from the outline:
 - Data + list: "Every card is pulling live data from Convex."
-- Auth: "We didn't build any sign-in logic — WorkOS and Convex handle that. We just connected the button."
+- Auth: "We didn't build any sign-in logic — the sign-in system handles that. We just connected the button."
 - Submission: "I submit feedback and it appears instantly — no page refresh. That's Convex doing real-time sync."
 - Voting: "Last feature. Voting works, it persists, and you can't double-vote. That's the entire product — built with ChatGPT prompts."
 
@@ -364,7 +367,7 @@ For each of these, use the talking points from the outline:
 
 **Type:** Screen recording + ChatGPT desktop app
 
-**Goal:** Deploy the app to production. The code is already on GitHub (pushed during setup). We just need Vercel auth and deployment.
+**Goal:** Deploy the app to production using the deploy-project skill. The code is already on GitHub (pushed during setup). We set up continuous deployment so every future push auto-deploys.
 
 **Preconditions:**
 - All features work locally (Scene 8)
@@ -373,52 +376,46 @@ For each of these, use the talking points from the outline:
 
 **Say:** "The app works locally and our code is already on GitHub. Now let's put it on the internet."
 
-**Step 1: Authenticate with Vercel (interactive)**
-
-Say: "We need to connect to Vercel — this is what puts our site on the internet."
-
-Show B-roll of the Vercel getting started page (`https://vercel.com/docs/getting-started-with-vercel`) briefly while explaining: "Sign up at vercel.com with your GitHub account — it's free."
-
-Run in terminal:
-```bash
-npx vercel login
-```
-
-This opens the browser for authorization. Wait for it to complete.
-
-**Step 2: Paste this prompt into ChatGPT:**
+**Step 0: Install the deploy skill (if not already installed)**
 
 ```
-The feedback board is working on my computer and the code is already on GitHub. Now I want to put it on the internet so anyone can visit it.
+npx skills add christiannwamba/launchkit --skill deploy-project -a codex -a claude-code -y
+```
 
-I've already signed into Vercel from my terminal. Here's what I need you to do:
+Start a new chat so the agent picks up the skill.
 
-1. Push the latest code to GitHub (the repo already exists)
-2. Deploy the website to Vercel and connect it to the GitHub repository
-3. Set up the live database and sign-in so everything works on the internet, not just on my computer — look at the Convex dashboard settings and the existing environment variables to figure out what the live site needs
+**Step 1: Paste this prompt into ChatGPT:**
 
-When there's a command you can run for me, just run it. If something needs me to open a page in my browser or click a button on a website, tell me exactly what to do.
+```
+The app is working on my computer and the code is already on GitHub. Now I want to put it on the internet so anyone can visit it.
 
-When we're done, I should be able to open a URL and see my feedback board live with sign-in and voting working.
+Run the deploy-project skill to set up deployment. It should connect everything so that every time I push code to GitHub, the site updates automatically — both the website and the backend.
+
+When it needs me to sign in to something or copy a key from a dashboard, I'll do that.
+
+When we're done, I should be able to open a URL and see my app live with sign-in and voting working.
 ```
 
 **What happens on screen:**
-- Paste the prompt — ChatGPT pushes latest code and handles Vercel deployment non-interactively
-- ChatGPT may ask you to open the Vercel dashboard or Convex dashboard to configure environment variables — follow those instructions on screen
-- Open the live URL, verify everything works
+- The agent follows the deploy-project skill steps
+- It will ask the user to sign into Vercel (browser opens)
+- It will ask the user to generate a deploy key from the Convex dashboard
+- It sets up continuous deployment: GitHub push → Vercel build → Convex deploy
+- It pushes the latest code to trigger the first deploy
+- The live URL loads the app
 
 **Verification:**
 - Live URL loads the feedback board
-- Auth works (sign in → name shows → sign out)
+- Sign-in works (sign in → name shows → sign out)
 - Submission works (new item appears)
 - Voting works (count changes, persists)
 
-**Say:** "Building is exciting, but shipping is the part that changes your life. This app is live. Someone could use it today."
+**Say:** "Building is exciting, but shipping is the part that changes your life. This app is live. Someone could use it today. And from now on, every time I push code to GitHub, the site updates automatically."
 
 **Recovery:**
-- If the deploy fails: "Vercel says the build failed. Here's the error from the build log: [paste]. What's wrong?"
+- If the deploy fails: "The build failed. Here's the error from the build log: [paste]. What's wrong?"
 - If sign-in doesn't work on the live site: "The app loads but when I click sign in, it gives an error. It works on my computer but not on the live site. How do I fix the sign-in settings for the live URL?"
-- If the live site shows no data: "The site loads but there's no feedback data. On my computer I can see the data. How do I get the live site connected to the right database?"
+- If the live site shows no data: "The site loads but there's no data. On my computer I can see the data. How do I get the live site connected to the right database?"
 
 ---
 
@@ -482,10 +479,10 @@ cp docs/feedback-board-plan.md ~/Desktop/plan-backup.md
 
 # Delete the project
 cd ..
-rm -rf feedback-board
+rm -rf <project-folder>
 
-# Start fresh from Scene 6
-npm create convex@latest feedback-board -- -t nextjs-authkit
+# Create a new folder and start fresh from Scene 6
+mkdir <project-folder> && cd <project-folder>
 ```
 
-Then re-run the setup skill (Scene 6), re-generate the plan (Scene 7), and follow the plan (Scene 8).
+Then re-run the setup-project skill (Scene 6), re-generate the plan (Scene 7), and follow the plan (Scene 8).

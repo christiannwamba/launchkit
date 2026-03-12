@@ -1,11 +1,11 @@
 ---
 name: plan-product
-description: Generate a step-by-step build plan for any product. Each step is product-first and verifiable — the user can see the result in their browser or dashboard after every step. Use this when you know what you want to build and need a concrete plan before writing code.
+description: Generate a step-by-step build plan for any product or feature. Each step is product-first and verifiable — the user can see the result in their browser or dashboard after every step. Use this when you know what you want to build and need a concrete plan before writing code.
 ---
 
 # Plan Product
 
-This skill generates a plan file that breaks a product into buildable, verifiable steps. It works for any project and any task — not just a specific one. The plan file is named after the task (e.g., `feedback-board-plan.md`, `add-payments-plan.md`) and saved in the `docs/` folder.
+This skill generates a plan file that breaks any product or feature into buildable, verifiable steps. The plan file is named after the task (e.g., `feedback-board-plan.md`, `add-payments-plan.md`) and saved in the `docs/` folder.
 
 ## The user is non-technical
 
@@ -15,6 +15,23 @@ The person using this skill has never written code before. Every interaction —
 - **When asking for clarification,** ask about what they want the product to do, what behavior they expect, or what they're seeing on screen. Never ask them to inspect code, check a config file, or understand a stack trace.
 - **When something breaks,** help them describe the problem in their own terms: what they clicked, what they expected, what they see instead. Then fix it. Don't explain the root cause unless they ask.
 - **Never assume they know** what Convex, Next.js, WorkOS, shadcn, React, or any framework is. They know what their product does. That's the shared language.
+
+## Skill integration
+
+When generating the plan, reference the appropriate skills at each step so the agent knows which specialized knowledge to apply:
+
+| Skill | When to reference |
+|-------|-------------------|
+| **setup-project** | Initial project bootstrapping (if the project isn't set up yet) |
+| **frontend-design** | Any step that builds or styles UI |
+| **web-design-guidelines** | Layout, accessibility, and responsive design decisions |
+| **next-best-practices** | Page structure, routing, data fetching, and React patterns |
+| **convex** / **convex-helpers-guide** | Any step that creates or modifies data, queries, or mutations |
+| **workos** | Any step involving sign-in, sign-out, or user identity |
+| **shadcn** | Any step that uses UI components |
+| **deploy-project** | The final deployment step |
+
+In each step's prompt, include a line like: "Reference the **[skill-name]** skill for best practices on this step." Only reference skills that are relevant to that specific step.
 
 ## When to use this skill
 
@@ -48,6 +65,17 @@ One sentence describing the product capability this step delivers. Write it as w
 
 - Good: "Anyone can visit the site and see a list of all feedback that's been submitted."
 - Bad: "Create a Convex query and a React component to fetch and render feedback items."
+
+#### How data flows in this step
+Describe what happens to data in this step using five concepts, written in plain, non-technical language. Only include the concepts that are relevant to this step — not all five will apply every time.
+
+- **Storage** — where data is saved (e.g., "Feedback items are saved in the database so they don't disappear when you close the browser")
+- **Security** — who can access it (e.g., "Anyone can see feedback, but only signed-in users can submit new items")
+- **Processing** — what happens to it (e.g., "When you vote, the system checks if you already voted and either adds or removes your vote")
+- **Transmission** — how it moves between systems (e.g., "New feedback appears on everyone's screen instantly without refreshing the page")
+- **Presentation** — how the user sees it (e.g., "Each feedback item shows as a card with the title, a preview, vote count, and how long ago it was posted")
+
+Keep descriptions conversational. Never mention database tables, API calls, components, or technical terms. The user should understand the data story of each step without knowing how software works.
 
 #### What to tell the agent
 A prompt the user can paste into their AI coding agent. This prompt must:
