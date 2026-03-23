@@ -201,10 +201,10 @@ Paste this prompt into the agent:
 ```
 Run these commands to install two skills I want to use:
 
-npx skills add christiannwamba/launchkit --skill setup-project -a codex -a claude-code -y
-npx skills add christiannwamba/launchkit --skill plan-product -a codex -a claude-code -y
+npx skills add https://github.com/christiannwamba/launchkit/tree/main/skills/plan-product -a codex -a claude-code -y
+npx skills add https://github.com/christiannwamba/launchkit/tree/main/skills/deploy-project -a codex -a claude-code -y
+npx skills add https://github.com/christiannwamba/launchkit/tree/main/skills/setup-project -a codex -a claude-code -y
 
-The first one sets up the entire project. The second one helps us plan what to build. Let me know when they're done.
 ```
 
 After the skill is installed, **start a new chat** so the agent picks up the newly installed skill.
@@ -214,9 +214,7 @@ After the skill is installed, **start a new chat** so the agent picks up the new
 ```
 I want to build a customer feedback board — a website where people can see feedback others have submitted, sign in to submit their own feedback, and vote on ideas they like.
 
-Run the setup-project skill to set up the project for me. It will check what tools I need, install anything that's missing, create the project, push it to GitHub, install the coding skills, and set up the theme.
-
-When it asks me to sign in to anything, I'll do that. When it asks me to pick a theme color, I'll go to the link and choose one.
+Run the $setup-project skill to set up the project for me.
 ```
 
 **What happens on screen:**
@@ -286,7 +284,7 @@ I'm building a customer feedback board. Here's what the finished product should 
 4. If you sign in, you can vote on feedback you like — but only once per item (clicking again removes your vote)
 5. The sign-in system is already set up
 
-Use the plan-product skill to create a build plan in docs/feedback-board-plan.md. Each step should build one piece of the product that I can immediately see and check — in my browser or in the Convex dashboard. No steps where I just have to trust that something worked.
+Use the $plan-product skill to create a build plan in docs/feedback-board-plan.md. Each step should build one piece of the product that I can immediately see and check — in my browser or in the Convex dashboard. No steps where I just have to trust that something worked.
 ```
 
 **What happens on screen:**
@@ -376,20 +374,12 @@ For each of these, use the talking points from the outline:
 
 **Say:** "The app works locally and our code is already on GitHub. Now let's put it on the internet."
 
-**Step 0: Install the deploy skill (if not already installed)**
-
-```
-npx skills add christiannwamba/launchkit --skill deploy-project -a codex -a claude-code -y
-```
-
-Start a new chat so the agent picks up the skill.
-
 **Step 1: Paste this prompt into ChatGPT:**
 
 ```
 The app is working on my computer and the code is already on GitHub. Now I want to put it on the internet so anyone can visit it.
 
-Run the deploy-project skill to set up deployment. It should connect everything so that every time I push code to GitHub, the site updates automatically — both the website and the backend.
+Run the $deploy-project skill to set up deployment. It should connect everything so that every time I push code to GitHub, the site updates automatically — both the website and the backend.
 
 When it needs me to sign in to something or copy a key from a dashboard, I'll do that.
 

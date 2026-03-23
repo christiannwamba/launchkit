@@ -15,9 +15,10 @@ This skill bootstraps the entire project in one pass. It checks dependencies, cr
 4. Installs shadcn/ui and applies a custom theme
 5. Installs default shadcn components
 6. Creates an `agent.md` with project commands and skill reference
-7. Creates a Codex action for starting the dev server
-8. Pushes the project to GitHub
-9. Tells the user how to start the dev server
+7. Creates a Claude Code launch configuration for the dev server
+8. Creates a Codex environment configuration for the dev server
+9. Pushes the project to GitHub
+10. Tells the user how to start the dev server
 
 ## Step 1: Check and install dependencies
 
@@ -124,8 +125,7 @@ Stop and ask the user:
 
 Wait for the user to provide the theme command or CSS. Then:
 
-- If they give a CLI command: run it
-- If they give CSS variables: paste them into `app/globals.css` (or wherever the project's global styles live), replacing the existing `:root` and `.dark` color variable blocks
+- When they give a CLI command: run it
 
 If the CLI command already initializes shadcn (e.g., it includes `init`), skip any separate init step. If it only applies a theme, run `npx shadcn@latest init -d -y` first, then apply the theme.
 
@@ -170,7 +170,7 @@ This runs the Convex compiler once and exits. If there are errors, fix them befo
 
 ## Codex action
 
-To configure the dev server as a Codex action: open the Codex app settings, go to Actions, and add a new action with the command `npm run dev`. This adds a play button to the Codex toolbar for one-click server start.
+The dev server is configured as a Codex action in `.codex/environments/environment.toml`. This adds a play button to the Codex toolbar for one-click server start.
 
 When the dev server starts for the first time, Convex will open your browser to sign in with GitHub — this creates your free Convex account and sets up the sign-in system.
 
@@ -211,7 +211,40 @@ When building features, follow the patterns described in these skills. They are 
 | `npx shadcn@latest add [component] -y -o` | Add a shadcn component |
 ```
 
-## Step 7: Push to GitHub
+## Step 7: Create Claude Code launch configuration
+
+Create the file `.claude/launch.json` at the project root:
+
+```json
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Dev Server",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 3000
+    }
+  ]
+}
+```
+
+This lets Claude Code start the dev server directly from the launch configuration.
+
+## Step 8: Create Codex environment configuration
+
+Create the file `.codex/environments/environment.toml` at the project root:
+
+```toml
+[[actions]]
+name = "Run dev"
+icon = "run"
+command = "npm dev"
+```
+
+This adds a play button to the Codex toolbar so the user can start the dev server with one click.
+
+## Step 9: Push to GitHub
 
 Now that the project exists and we're authenticated with `gh`, create a GitHub repo and push:
 
@@ -230,7 +263,7 @@ Tell the user:
 
 > "Your code is now on GitHub. Every change we make from here gets saved there."
 
-## Step 8: Hand off
+## Step 10: Hand off
 
 Tell the user:
 
