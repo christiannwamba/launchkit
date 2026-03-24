@@ -5,7 +5,7 @@ description: Bootstrap a full-stack Next.js + Convex + WorkOS AuthKit project wi
 
 # Setup Project
 
-This skill bootstraps the entire project in one pass. It checks dependencies, creates the project in the current directory, installs agent skills locally, sets up theming, creates an agent.md, and pushes to GitHub. The product-specific details (what you're building) come from the user's prompt — this skill just sets up the foundation.
+This skill bootstraps the entire project in one pass. It checks dependencies, creates the project in the current directory, installs agent skills locally, sets up theming, creates CLAUDE.md and AGENTS.md with dev workflow instructions, and pushes to GitHub. The product-specific details (what you're building) come from the user's prompt — this skill just sets up the foundation.
 
 ## What this skill does
 
@@ -14,7 +14,7 @@ This skill bootstraps the entire project in one pass. It checks dependencies, cr
 3. Installs agent skills locally (project-level, not global)
 4. Installs shadcn/ui and applies a custom theme
 5. Installs default shadcn components
-6. Creates an `agent.md` with project commands and skill reference
+6. Creates `CLAUDE.md` and `AGENTS.md` with dev workflow (start, verify, stop)
 7. Creates a Claude Code launch configuration for the dev server
 8. Creates a Codex environment configuration for the dev server
 9. Pushes the project to GitHub
@@ -119,8 +119,6 @@ Stop and ask the user:
 
 > "Time to pick your theme. Open https://ui.shadcn.com/create in your browser, customize the colors and style you want, then give me:
 > - The CLI command it gives you, or
-> - The CSS variables to paste into your styles
->
 > I'll apply it for you."
 
 Wait for the user to provide the theme command or CSS. Then:
@@ -139,56 +137,50 @@ npx shadcn@latest add button card input textarea badge dialog -y -o
 
 These are the base components most projects need. Infer additional components needed based on the product plan or feature requirements described by the user, and install them too.
 
-## Step 6: Create agent.md
+## Step 6: Create CLAUDE.md and AGENTS.md
 
-Create a file called `agent.md` at the project root. Infer the project name from the folder name or the user's description. Use this structure:
+Create two files at the project root. Both contain the same dev workflow instructions so that Claude Code, Codex, Copilot, and other agents all know how to operate the project. Infer the project name from the folder name or the user's description.
+
+### 6a. Create `CLAUDE.md`
 
 ```markdown
-# [Project Name] — Agent Guide
+# [Project Name]
 
-## Running the project
-
-Start both the Next.js frontend and Convex backend with one command:
+## Start
 
 \`\`\`bash
 npm run dev
 \`\`\`
 
-This starts:
-- Next.js dev server at `http://localhost:3000`
-- Convex dev server syncing your backend functions
+Starts Next.js on `http://localhost:3000` and the Convex dev watcher.
 
-## Validating changes
+## Verify
 
-After every code change, run this command to check that the Convex schema and functions compile without errors:
+**Backend** — confirm Convex schema and functions compile:
 
 \`\`\`bash
 npx convex dev --once
 \`\`\`
 
-This runs the Convex compiler once and exits. If there are errors, fix them before moving on. Do not skip this step.
+**Backend logs** — tail live logs from the Convex dev deployment:
 
-## Codex action
+\`\`\`bash
+npx convex logs
+\`\`\`
 
-The dev server is configured as a Codex action in `.codex/environments/environment.toml`. This adds a play button to the Codex toolbar for one-click server start.
+**Frontend** — visually verify the page renders:
 
-When the dev server starts for the first time, Convex will open your browser to sign in with GitHub — this creates your free Convex account and sets up the sign-in system.
+\`\`\`bash
+playwright-cli open http://localhost:3000
+playwright-cli screenshot
+playwright-cli close
+\`\`\`
 
-## Installed skills
+## Stop
 
-This project has the following agent skills installed:
-
-| Skill | What it teaches |
-|-------|----------------|
-| **frontend-design** | Production-grade UI — avoid generic aesthetics, use intentional design choices |
-| **web-design-guidelines** | Web design fundamentals, accessibility, responsive patterns |
-| **vercel-react-best-practices** | React and Next.js patterns — RSC boundaries, data fetching, App Router conventions |
-| **convex** | Convex schema design, queries, mutations, real-time subscriptions |
-| **convex-helpers-guide** | Convex helper utilities and advanced patterns |
-| **workos** | WorkOS AuthKit integration — sign-in, sign-out, user identity |
-| **shadcn** | shadcn/ui component usage, theming, and composition |
-
-When building features, follow the patterns described in these skills. They are your reference for how to write code in this project.
+\`\`\`bash
+lsof -ti :3000 | xargs kill -9
+\`\`\`
 
 ## Stack
 
@@ -207,9 +199,15 @@ When building features, follow the patterns described in these skills. They are 
 |---------|---------|
 | `npm run dev` | Start the full dev environment (frontend + backend) |
 | `npx convex dev --once` | Validate Convex schema and functions compile |
+| `npx convex logs` | Tail Convex backend logs |
 | `npx convex dashboard` | Open the Convex dashboard in the browser |
+| `playwright-cli screenshot` | Take a screenshot of the running app |
 | `npx shadcn@latest add [component] -y -o` | Add a shadcn component |
 ```
+
+### 6b. Create `AGENTS.md`
+
+Create `AGENTS.md` at the project root with the **exact same content** as `CLAUDE.md` above. This ensures agents that follow the AGENTS.md convention (Codex, Copilot, Cursor, etc.) get the same instructions.
 
 ## Step 7: Create Claude Code launch configuration
 
